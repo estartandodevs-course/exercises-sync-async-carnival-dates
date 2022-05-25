@@ -10,7 +10,7 @@
   "keywords": [],
   "author": "ED Team",
   "license": "ISC",
-  "dependencies": {
+  "devDependencies": {
     "jest": "^28.1.0"
   }
 }

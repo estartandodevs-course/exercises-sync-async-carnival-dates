@@ -29,17 +29,13 @@ function getNationalHolidays(year) {
     axios
       .get(`${BASE_API_NATIONAL_HOLIDAYS}${year}`)
       .then((res) => {
-        resolve(res.data);
+        resolve(res.data[1].date);
       })
-      .catch((err) => { 
-        reject(err);
+      .catch((err) => {
+        reject("Erro ao calcular feriados.");
       })
   });
 };
-
-getNationalHolidays(2020).then(data => {
-  console.log(data[1].date); // 2020-02-25
-});
 
 /* 
     TODO 2:
@@ -47,13 +43,26 @@ getNationalHolidays(2020).then(data => {
     com o resolve de um array com as datas de carnaval do período de 2020 a 2030.
     A função deve buscar a informação da data na api de Feriados-Nacionais
 
-
-
-    PESQUISAR PROMISE.ALL PRA RESOLVER ESSA
 */
-function getCarnivalDatesFrom2020To2030() {
-  // implemente aqui
-}
+function getCarnivalDatesFrom2020To2030(year) {
+  return new Promise((resolve, reject) => {
+    axios
+      .get(`${BASE_API_NATIONAL_HOLIDAYS}${year}`)
+      .then((res) => {
+        resolve(res.data[1].date);
+      })
+      .catch((err) => {
+        reject(err);
+      })
+  })
+} 
+
+const anos = [2020, 2021, 2022, 2023, 2024,].map((value) => getCarnivalDatesFrom2020To2030(value));
+
+Promise.all(anos).then((res) => {
+  console.log("Todas as datas: ", res);
+})
+
 
 module.exports = {
   getNationalHolidays,
