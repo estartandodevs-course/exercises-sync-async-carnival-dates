@@ -7,6 +7,7 @@ Baixar o resultado, tratar o retorno de acordo com o que cada função deve reto
 Documentação da API: https://brasilapi.com.br/docs#tag/Feriados-Nacionais
 
 */
+const axios = require('axios');
 
 const BASE_API_NATIONAL_HOLIDAYS = "https://brasilapi.com.br/api/feriados/v1/";
 
@@ -24,8 +25,21 @@ const BASE_API_NATIONAL_HOLIDAYS = "https://brasilapi.com.br/api/feriados/v1/";
 */
 
 function getNationalHolidays(year) {
-  // implemente aqui
-}
+  return new Promise((resolve, reject) => {
+    axios
+      .get(`${BASE_API_NATIONAL_HOLIDAYS}${year}`)
+      .then((res) => {
+        resolve(res.data);
+      })
+      .catch((err) => { 
+        reject(err);
+      })
+  });
+};
+
+getNationalHolidays(2020).then(data => {
+  console.log(data); // 2020-02-25
+});
 
 /* 
     TODO 2:
@@ -34,6 +48,8 @@ function getNationalHolidays(year) {
     A função deve buscar a informação da data na api de Feriados-Nacionais
 
 
+
+    PESQUISAR PROMISE.ALL PRA RESOLVER ESSA
 */
 function getCarnivalDatesFrom2020To2030() {
   // implemente aqui
