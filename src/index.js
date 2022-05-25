@@ -38,7 +38,7 @@ function getNationalHolidays(year) {
 };
 
 getNationalHolidays(2020).then(data => {
-  console.log(data); // 2020-02-25
+  console.log(data[1].date); // 2020-02-25
 });
 
 /* 
