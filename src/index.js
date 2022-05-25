@@ -37,12 +37,12 @@ function getNationalHolidays(year) {
   });
 };
 
-/* 
+
 getNationalHolidays(2020).then(data => {
   console.log(data); // 2020-02-25 -- funcionando 
 });
 
-
+/* 
     TODO 2:
     Implemente a função abaixo (getCarnivalDatesFrom2020To2030) para que ela retorne uma promise
     com o resolve de um array com as datas de carnaval do período de 2020 a 2030.
