@@ -20,26 +20,6 @@ const getCarnivalDatesFrom2020To2030 = () => {
   return Promise.all(datas)
 }
 
-// const arrayDatas = []
-// function getCarnivalDatesFrom2020To2030(year = 2020) {
-//   if (year <= 2030) {
-//     return new Promise((resolve, reject) => {
-//       axios
-//         .get(`${BASE_API_NATIONAL_HOLIDAYS}/${year}`)
-//         .then(res => {
-//           return resolve(res.data[1].date)
-//         })
-//     })
-//     .then(getCarnivalDatesFrom2020To2030(year + 1))
-//   }
-// }
-// getCarnivalDatesFrom2020To2030()
-// Promise.all(arrayDatas).then((result) => {
-//   console.log(result)
-// })
-
-
-
 module.exports = {
   getNationalHolidays,
   getCarnivalDatesFrom2020To2030,
