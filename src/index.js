@@ -21,9 +21,6 @@ function getCarnivalDatesFrom2020To2030() {
   return Promise.all(all)
   };
 
-
-getCarnivalDatesFrom2020To2030(); //sempre da unhandled rejection
-
 module.exports = {
   getNationalHolidays,
   getCarnivalDatesFrom2020To2030,
