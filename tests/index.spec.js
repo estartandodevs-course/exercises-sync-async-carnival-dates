@@ -39,12 +39,12 @@ describe("Tests", () => {
     return expect(getNationalHolidays(2025)).resolves.toEqual("2025-03-04");
   });
 
-  test("getNationalHolidays should return a promise with resolve for year 2025", () => {
+  test("getNationalHolidays should return a promise with resolve for year 2027", () => {
     expect.assertions(1);
     return expect(getNationalHolidays(2027)).resolves.toEqual("2027-02-09");
   });
 
-  test("getNationalHolidays should return a promise with resolve for year 2025", () => {
+  test("getNationalHolidays should return a promise with resolve for year 2050", () => {
     expect.assertions(1);
     return expect(getNationalHolidays(2050)).resolves.toEqual("2050-02-22");
   });
