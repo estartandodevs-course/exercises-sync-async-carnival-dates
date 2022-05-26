@@ -37,11 +37,6 @@ function getNationalHolidays(year) {
   });
 };
 
-
-getNationalHolidays(2020).then(data => {
-  console.log(data); // 2020-02-25 -- funcionando 
-});
-
 /* 
     TODO 2:
     Implemente a função abaixo (getCarnivalDatesFrom2020To2030) para que ela retorne uma promise
@@ -50,10 +45,12 @@ getNationalHolidays(2020).then(data => {
 
 */
 
-function getCarnivalDatesFrom2020To2030() {
-  const anos = [2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030].map((value) => getNationalHolidays(value).then((res) => {return res}));
-  return Promise.all(anos).then(res => {
-    return res
+function getCarnivalDatesFrom2020To2030(){
+  const anos = [2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030]
+  const all = anos.map((value) => getNationalHolidays(value))
+
+  return Promise.all(all).then(res => {
+    console.log(res)
   });
 } 
 
