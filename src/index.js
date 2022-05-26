@@ -14,14 +14,13 @@ function getNationalHolidays(year) {
   });
 };
 
-function getCarnivalDatesFrom2020To2030(){
+function getCarnivalDatesFrom2020To2030() {
   const anos = [2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030]
   const all = anos.map((value) => getNationalHolidays(value))
 
-  return Promise.all(all).then(res => {
-    console.log(res)
-  });
-} 
+  return Promise.all(all)
+  };
+
 
 getCarnivalDatesFrom2020To2030(); //sempre da unhandled rejection
 
