@@ -53,27 +53,13 @@ async function getNationalHolidays(year) {
 */
 async function getCarnivalDatesFrom2020To2030() {
   // implemente aqui
-  const dates = [];
-  return new Promise( async (resolve, reject) => {
-    for(let i = 2020; i < 2031; i++){
-      const year = i;
-      try {
-        const response  = await axios(BASE_API_NATIONAL_HOLIDAYS + `${year}`)
-        const json = response.data;
-        const [carnival] = json.filter((item) => {
-          return item.name === 'Carnaval';
-        })
-        const {date} = carnival;
-        dates.push(date);
-        if(i === 2030){
-          resolve(dates);
-        }
-      } catch(e){
-        reject('Erro: ', e);
-      }
-    }
-  })
+  const dates = [2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030];
+  const maping = dates.map((year)=>{return getNationalHolidays(year)});
+  return Promise.all(maping);
 }
+
+//getCarnivalDatesFrom2020To2030();
+
 
 module.exports = {
   getNationalHolidays,
