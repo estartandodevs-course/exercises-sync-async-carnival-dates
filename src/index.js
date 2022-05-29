@@ -1,45 +1,34 @@
-/*
-
-Para este exercício utilize o recurso de Promises do Javascript.
-Será necessário buscar as informações em uma api de feriados nacionais.
-Baixar o resultado, tratar o retorno de acordo com o que cada função deve retornar.
-
-Documentação da API: https://brasilapi.com.br/docs#tag/Feriados-Nacionais
-
-*/
-
 const BASE_API_NATIONAL_HOLIDAYS = "https://brasilapi.com.br/api/feriados/v1/";
+const axios = require('axios')
 
-/*
-    TODO 1:
-    Implemente a função abaixo (getNationalHolidays) para que ela retorne uma promise
-    com o resolve da data do carnaval de acordo com o ano passado como parâmetro.
-    A função deve buscar a informação da data na api de Feriados-Nacionais
-    
-    exemplo de como seria usada: 
-      getNationalHolidays(2020).then(data => {
-        console.log(data); // 2020-02-25
-      });
+async function getNationalHolidays(year) {
+ const holydaysPromise = new Promise( async (resolve,reject) => {
+    try {
+      const response = await axios.get(`${BASE_API_NATIONAL_HOLIDAYS}/${year}`);
+      const result = await response.data[1].date
+      resolve(result)
+    }   
+    catch (error) {
+      reject(error.response.data.message)
+    }
+  })
+  return (holydaysPromise)
+} 
+getNationalHolidays(2020)
 
-*/
 
-function getNationalHolidays(year) {
-  // implemente aqui
+async function getCarnivalDatesFrom2020To2030(startingYear = 2020,finalYear = 2030) {
+  const dates = []
+  for (let i = startingYear; i <= finalYear; i++){
+    dates.push(i)
+  }
+  let results = dates.map((year) => getNationalHolidays(year));
+  return Promise.all(results);
 }
 
-/* 
-    TODO 2:
-    Implemente a função abaixo (getCarnivalDatesFrom2020To2030) para que ela retorne uma promise
-    com o resolve de um array com as datas de carnaval do período de 2020 a 2030.
-    A função deve buscar a informação da data na api de Feriados-Nacionais
-
-
-*/
-function getCarnivalDatesFrom2020To2030() {
-  // implemente aqui
-}
 
 module.exports = {
   getNationalHolidays,
   getCarnivalDatesFrom2020To2030,
 };
+
