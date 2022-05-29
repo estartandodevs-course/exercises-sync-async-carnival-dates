@@ -29,25 +29,22 @@ function getNationalHolidays(year) {
   const holidays = new Promise (async (resolve, reject) => {
     try {
       const holidayResult = await axios.get(`${BASE_API_NATIONAL_HOLIDAYS}/${year}`);
-      console.log("aqui", holidayResult.data)
-
       holidayResult.data.forEach(holiday => {
         if (holiday.name == "Carnaval"){
-          console.log(holiday.name, holiday.date);
-          resolve(`${holiday.date}`)
-        } 
-      })
+          resolve(`${holiday.date}`);
+        } ;
+      });
     } catch (error) {
-      console.log("Ocorreu um erro", error)
+      console.log("Ocorreu um erro", error);
       reject("Erro ao calcular feriados.");
     }
   })
-  return holidays
+  return holidays;
 }
 
 getNationalHolidays(2020).then(data => {
-  console.log(data)
-})
+  // console.log(data);
+});
 
 /* 
     TODO 2:
@@ -59,7 +56,27 @@ getNationalHolidays(2020).then(data => {
 */
 function getCarnivalDatesFrom2020To2030() {
   // implemente aqui
+  const years = [2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030];
+
+  const getCarnivalDates = new Promise (async (resolve, reject) => {
+    try {
+      const holidays = years.map((year) => {
+        getNationalHolidays(year).toString()
+      })
+
+      const dates = await Promise.all(holidays);
+      resolve(dates);
+      console.log("promises", dates);
+
+    } catch (error) {
+      console.log('Ocorreu um erro', error);
+      reject (error);
+    }
+})
+  return getCarnivalDates
 }
+
+getCarnivalDatesFrom2020To2030()
 
 module.exports = {
   getNationalHolidays,
