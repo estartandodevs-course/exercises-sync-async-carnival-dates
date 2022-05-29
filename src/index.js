@@ -8,6 +8,7 @@ Documentação da API: https://brasilapi.com.br/docs#tag/Feriados-Nacionais
 
 */
 
+const axios = require ('axios');
 const BASE_API_NATIONAL_HOLIDAYS = "https://brasilapi.com.br/api/feriados/v1/";
 
 /*
@@ -25,7 +26,28 @@ const BASE_API_NATIONAL_HOLIDAYS = "https://brasilapi.com.br/api/feriados/v1/";
 
 function getNationalHolidays(year) {
   // implemente aqui
+  const holidays = new Promise (async (resolve, reject) => {
+    try {
+      const holidayResult = await axios.get(`${BASE_API_NATIONAL_HOLIDAYS}/${year}`);
+      console.log("aqui", holidayResult.data)
+
+      holidayResult.data.forEach(holiday => {
+        if (holiday.name == "Carnaval"){
+          console.log(holiday.name, holiday.date);
+          resolve(`${holiday.date}`)
+        } 
+      })
+    } catch (error) {
+      console.log("Ocorreu um erro", error)
+      reject("Erro ao calcular feriados.");
+    }
+  })
+  return holidays
 }
+
+getNationalHolidays(2020).then(data => {
+  console.log(data)
+})
 
 /* 
     TODO 2:
