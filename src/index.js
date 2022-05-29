@@ -9,7 +9,7 @@ Documentação da API: https://brasilapi.com.br/docs#tag/Feriados-Nacionais
 */
 
 const BASE_API_NATIONAL_HOLIDAYS = "https://brasilapi.com.br/api/feriados/v1/";
-
+const axios = require("axios");
 /*
     TODO 1:
     Implemente a função abaixo (getNationalHolidays) para que ela retorne uma promise
@@ -25,7 +25,31 @@ const BASE_API_NATIONAL_HOLIDAYS = "https://brasilapi.com.br/api/feriados/v1/";
 
 function getNationalHolidays(year) {
   // implemente aqui
+
+  return new Promise((resolve,reject) => {
+    axios
+      .get(`${BASE_API_NATIONAL_HOLIDAYS}${year}`)
+      .then((res) => {
+        data = res.data;
+        data.forEach((el) => {
+          var {date: date, name: holiday, type: type } = el;       
+          if (holiday == 'Carnaval'){
+            resolve(date);
+          }
+          
+        })
+      })
+      .catch((err) => {
+        reject('Erro ao calcular feriados.');
+      });
+  })
+
+
+
+
 }
+
+//getNationalHolidays(2022)
 
 /* 
     TODO 2:
@@ -35,9 +59,22 @@ function getNationalHolidays(year) {
 
 
 */
-function getCarnivalDatesFrom2020To2030() {
+async function getCarnivalDatesFrom2020To2030() {
+
+
   // implemente aqui
+
+
+  const years = ['2020','2021','2022','2023','2024','2025','2026','2027','2028','2029','2030']
+
+  const all =  years.map(value =>   getNationalHolidays(value).then((res) => {return res}));
+
+  return dates = Promise.all(all).then(res => {
+    return res.slice().sort()
+    })
+
 }
+
 
 module.exports = {
   getNationalHolidays,
