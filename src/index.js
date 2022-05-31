@@ -8,6 +8,8 @@ Documentação da API: https://brasilapi.com.br/docs#tag/Feriados-Nacionais
 
 */
 
+const axios = require('axios');
+
 const BASE_API_NATIONAL_HOLIDAYS = "https://brasilapi.com.br/api/feriados/v1/";
 
 /*
@@ -23,20 +25,33 @@ const BASE_API_NATIONAL_HOLIDAYS = "https://brasilapi.com.br/api/feriados/v1/";
 
 */
 
-function getNationalHolidays(year) {
+async function getNationalHolidays(year) {
   // implemente aqui
+  return new Promise(async(resolve, reject)=> {
+    try {
+      const response = await axios.get(BASE_API_NATIONAL_HOLIDAYS + `${year}`);
+      const json = response.data;
+      const [ filtro ]= json.filter((item)=>{return item.name === 'Carnaval'});
+      const { date } = filtro;
+      resolve(date);
+    } catch(e){
+      reject('Erro ao calcular feriados.');
+    }
+  })
 }
 
 /* 
-    TODO 2:
+    TO DO 2:
     Implemente a função abaixo (getCarnivalDatesFrom2020To2030) para que ela retorne uma promise
     com o resolve de um array com as datas de carnaval do período de 2020 a 2030.
     A função deve buscar a informação da data na api de Feriados-Nacionais
 
 
 */
-function getCarnivalDatesFrom2020To2030() {
-  // implemente aqui
+async function getCarnivalDatesFrom2020To2030() {
+  const anos = [2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030];
+  const datas = anos.map((year)=>{return getNationalHolidays(year)});
+  return Promise.all(datas);
 }
 
 module.exports = {
