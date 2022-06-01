@@ -1,3 +1,4 @@
+const axios = require('axios')
 /*
 
 Para este exercício utilize o recurso de Promises do Javascript.
@@ -24,7 +25,19 @@ const BASE_API_NATIONAL_HOLIDAYS = "https://brasilapi.com.br/api/feriados/v1/";
 */
 
 function getNationalHolidays(year) {
-  // implemente aqui
+  return new Promise(async(resolve, reject) => {
+    try{
+      const response = await axios.get(
+        BASE_API_NATIONAL_HOLIDAYS + year
+      );
+      const data = response.data;
+      const [carnival] = data.filter((item) => item.name === "Carnaval");
+      const {date} = carnival;
+      resolve(date);
+    }catch(error) {
+      reject("Erro ao calcular feriados.")
+    }
+  });
 }
 
 /* 
@@ -36,8 +49,20 @@ function getNationalHolidays(year) {
 
 */
 function getCarnivalDatesFrom2020To2030() {
-  // implemente aqui
-}
+  return new Promise (async (resolve, reject) => {
+   try { const datas = [2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030];
+
+    const promises = datas.map((item)=> getNationalHolidays(item));
+
+    const output =  Promise.all(promises);
+   resolve(output)
+
+    console.log("promises", output);} catch (error) {reject
+      ('sem rerro')
+    }
+    
+})};
+
 
 module.exports = {
   getNationalHolidays,
