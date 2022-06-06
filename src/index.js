@@ -1,3 +1,5 @@
+const axios = require("axios")
+
 /*
 
 Para este exercício utilize o recurso de Promises do Javascript.
@@ -8,24 +10,39 @@ Documentação da API: https://brasilapi.com.br/docs#tag/Feriados-Nacionais
 
 */
 
-const BASE_API_NATIONAL_HOLIDAYS = "https://brasilapi.com.br/api/feriados/v1/";
 
-/*
-    TODO 1:
-    Implemente a função abaixo (getNationalHolidays) para que ela retorne uma promise
-    com o resolve da data do carnaval de acordo com o ano passado como parâmetro.
-    A função deve buscar a informação da data na api de Feriados-Nacionais
-    
-    exemplo de como seria usada: 
-      getNationalHolidays(2020).then(data => {
-        console.log(data); // 2020-02-25
-      });
+const BASE_API_NATIONAL_HOLIDAYS = "https://brasilapi.com.br/api/feriados/v1";
 
-*/
+async function getNationalHolidays(year) {
 
-function getNationalHolidays(year) {
-  // implemente aqui
+
+  try {
+    const url = `${BASE_API_NATIONAL_HOLIDAYS}/${year}`
+
+    const response = await axios.get(url)
+
+    const holidays = response.data
+
+    const onlyCarnavalList = holidays.filter(
+      (holiday) => holiday.name === 'Carnaval'
+    )
+
+    const [carnival] = onlyCarnavalList
+
+    //return carnival.date
+    return Promise.resolve(carnival.date)
+
+  } catch (err) {
+    return Promise.reject("Erro ao calcular feriados.")
+  }
+
 }
+// getNationalHolidays(2023).then((data) => {
+//   console.log(data)
+//   console.log('DESAFIO 1')
+//})
+
+
 
 /* 
     TODO 2:
@@ -35,9 +52,26 @@ function getNationalHolidays(year) {
 
 
 */
+
+
 function getCarnivalDatesFrom2020To2030() {
-  // implemente aqui
+
+// const somaAnos = (valor,indice) => {
+//   return 2020+indice
+// } 
+//   console.log('somaAnos ', somaAnos(undefined,0), somaAnos(undefined,15))
+
+  const years = Array.from({length:11}, (value,index) => 2020+index)
+
+//  console.log(years)
+
+  const carnivalListProms = years.map((value,index) => getNationalHolidays(2020+index))
+
+  return Promise.all(carnivalListProms)
+
 }
+
+getCarnivalDatesFrom2020To2030().then(resultado => console.log(resultado))
 
 module.exports = {
   getNationalHolidays,
